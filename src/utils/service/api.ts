@@ -1,4 +1,4 @@
-import axios, { AxiosError } from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 import urlJoin from "url-join";
 import { API_STATUS } from "../constants/api";
 
@@ -8,27 +8,29 @@ const linkApi = (resource: string) => {
   return urlJoin(baseURL, resource);
 };
 
-const handleError = ({ response }: AxiosError) => {
+const handleError = (error: AxiosError) => {
   if (
-    !response?.status ||
-    [API_STATUS.HTTP_404_NOT_FOUND].includes(response?.status)
+    !error.response?.status ||
+    [API_STATUS.HTTP_500_SERVER].includes(error.response?.status)
   ) {
-    console.log({ response });
+    console.log(error.response);
+  } else {
+    return error.response.data;
   }
 };
 
-class RestService<ApiResponse, ApiRequestParam = any> {
+class RestService<T = any, R = any> {
   constructor(protected resource: string) {}
 
-  index(params?: ApiRequestParam) {
-    return new Promise((resolve, reject) => {
+  index(params?: R) {
+    return new Promise<AxiosResponse<T>>((resolve, rejects) => {
       axios
-        .get<ApiResponse>(linkApi(this.resource), {
+        .get<T>(linkApi(this.resource), {
           params,
         })
         .then(resolve)
         .catch((error: AxiosError) => {
-          handleError(error);
+          rejects(handleError(error));
         });
     });
   }
