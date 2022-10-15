@@ -1,4 +1,4 @@
-import { debounce } from '@mui/material';
+import { debounce, Typography } from '@mui/material';
 import { useEffect, useReducer, useState } from 'react';
 import { getInfoCity } from './api/weather';
 import './App.css';
@@ -45,6 +45,7 @@ function App() {
 
 	return (
 		<div className="App">
+			<Typography variant="h3">Hello word</Typography>
 			<div className={`wrapper ${isSuccess && 'active'}`}>
 				<header>
 					<i className="bx bx-left-arrow-alt" onClick={() => setIsSuccess(false)}></i>Weather App

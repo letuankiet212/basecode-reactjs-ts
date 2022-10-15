@@ -1,46 +1,18 @@
-import { createTheme, ThemeProvider, StyledEngineProvider, CssBaseline, Theme } from '@mui/material/';
+//Github https://github.com/karpolan/react-mui-pro-starter/tree/main/src/components
 
-const FRONT_COLORS = {
-	primary: {
-		main: '#81c784',
-		contrastText: '#000000',
-	},
-	secondary: {
-		main: '#ffb74d',
-		contrastText: '#000',
-	},
-	info: {
-		main: '#0277bd',
-		contrastText: '#FFFFFF',
-	},
-	success: {
-		main: '#2e7d32',
-		contrastText: '#FFFFFF',
-	},
-	warning: {
-		main: '#f9a825',
-		contrastText: '#FFFFFF',
-	},
-	error: {
-		main: '#c62828',
-		contrastText: '#FFFFFF',
-	},
-};
+import { createTheme, ThemeProvider, StyledEngineProvider, CssBaseline } from '@mui/material/';
+import global from './assets/style/base/global';
+import typography from './assets/style/base/typography';
+import variables from './assets/style/abstracts/variables';
 
 const DEFAULT_THEME = {
 	palette: {
-		...FRONT_COLORS,
+		...variables,
 	},
+	typography,
 	components: {
 		MuiCssBaseline: {
-			styleOverrides: (themeParam: Theme) => `
-				h1 {
-					color: ${themeParam.palette.success.main};
-				},
-				body{
-					background-color: ${themeParam.palette.secondary.contrastText}
-				}
-			`,
+			...global,
 		},
 	},
 };
