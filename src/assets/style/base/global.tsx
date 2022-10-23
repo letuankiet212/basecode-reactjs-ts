@@ -1,4 +1,5 @@
 import { Theme } from '@mui/material';
+import { lightBlue } from '@mui/material/colors';
 
 /**
  * @style CssBaseLine,
@@ -13,7 +14,7 @@ export default {
         }
 
         body{
-            background-color: ${themeParam.palette.secondary.contrastText}
+            background-color: ${lightBlue[200]}
         }
         
         .content-default-layout{

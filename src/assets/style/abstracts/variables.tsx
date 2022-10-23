@@ -30,6 +30,6 @@ export default {
 	},
 
 	text: {
-		primary: 'white',
+		primary: 'black',
 	},
 } as const;
