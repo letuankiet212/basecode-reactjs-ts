@@ -1,6 +1,6 @@
 import { debounce } from '@mui/material';
 import { useEffect, useReducer, useState } from 'react';
-import services from './api/index';
+import { getInfoCity } from './api/weather';
 import './App.css';
 import { ACTION_TYPE, apiReducer, INITIAL_STATE } from './utils/reducers/WeatherReducers';
 
@@ -35,15 +35,12 @@ function App() {
 	const getInfoWithCityName = async (payload: FormSearchByName | FormSearchByLatLong) => {
 		dispatch({ type: ACTION_TYPE.FETCH_START });
 
-		await services.weather
-			.index(payload)
-			.then(({ data: weatherInfo }) => {
-				dispatch({ type: ACTION_TYPE.FETCH_SUCCESS, payload: weatherInfo });
-				setIsSuccess(true);
-			})
-			.catch((e: ApiError) => {
-				dispatch({ type: ACTION_TYPE.FETCH_FAILED, errorMsg: e.message });
-			});
+		await getInfoCity(payload).then((weatherInfo) =>{
+			dispatch({ type: ACTION_TYPE.FETCH_SUCCESS, payload: weatherInfo });
+			setIsSuccess(true);
+		}).catch((e: ApiError) => {
+			dispatch({ type: ACTION_TYPE.FETCH_FAILED, errorMsg: e.message });
+		});
 	};
 
 	return (
